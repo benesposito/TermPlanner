@@ -2,8 +2,9 @@ import express from 'express';
 import { TermName } from '../../defs/defs';
 import { Term } from '../../defs/term';
 import { User } from '../../defs/user';
-import { ApiRequests, ApiResponses } from './defs/defs';
 import { State } from './defs/state';
+import { Requests } from './defs/api_requests';
+import { ApiResponseBodies } from '../../defs/api_bodies';
 
 const router = express.Router();
 const state = new State();
@@ -14,7 +15,7 @@ router.get('/', (req, res, next) => {
 	next();
 });
 
-router.post('/addUser', (req: ApiRequests.AddUserRequest, res, next) => {
+router.post('/addUser', (req: Requests.AddUser, res, next) => {
 	console.log(req.body);
 	if(!req.body.username) {
 		res.sendStatus(422);
@@ -30,7 +31,8 @@ router.post('/addUser', (req: ApiRequests.AddUserRequest, res, next) => {
 	next();
 });
 
-router.get('/getUser', (req: ApiRequests.GetUserRequest, res, next) => {
+router.get('/getUser', (req: Requests.GetUser, res, next) => {
+	let response_body: ApiResponseBodies.GetUser;
 	let user = state.getUser(req.query.username);
 
 	if(!user) {
@@ -38,11 +40,13 @@ router.get('/getUser', (req: ApiRequests.GetUserRequest, res, next) => {
 		return;
 	}
 
-	res.send(user);
+	response_body.user = user;
+
+	res.send(response_body);
 	next();
 });
 
-router.post('/addTerm', (req: ApiRequests.AddTermRequest, res, next) => {
+router.post('/addTerm', (req: Requests.AddTerm, res, next) => {
 	let user: User;
 	let term_name: TermName;
 
@@ -73,7 +77,7 @@ router.post('/addTerm', (req: ApiRequests.AddTermRequest, res, next) => {
 	next();
 });
 
-router.post('/addCourse', (req: ApiRequests.AddCourseRequest, res, next) => {
+router.post('/addCourse', (req: Requests.AddCourse, res, next) => {
 	let user: User;
 	let term: Term;
 
