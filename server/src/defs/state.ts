@@ -10,11 +10,11 @@ export class State {
 
 	}
 
-	/**
-	 * Adds new user
-	 *
-	 * @param username Username of user
-	 *
+	/** 
+	 * Adds new user 
+	 * 
+	 * @param username Username of user 
+	 * 
 	 * @throws InvalidParamError on user already added
 	 */
 	public addUser(username: string) {
@@ -34,6 +34,8 @@ export class State {
 	 * Gets existing user
 	 *
 	 * @param username Username of user, or null if user has not been defined
+	 * 
+	 * @returns User object corresponding to username
 	 */
 	public getUser(username: string): User {
 		let user: User = this.users.find((user) => {
@@ -45,6 +47,21 @@ export class State {
 		}
 
 		return user;
+	}
+
+	/**
+	 * Gets list of users
+	 *
+	 * @returns List of usernames defined in state
+	 */
+	public getUsers(): string[] {
+		let usernames: string[] = [];
+
+		this.users.forEach((user) => {
+			usernames.push(user.username);
+		});
+
+		return usernames;
 	}
 
 	/**

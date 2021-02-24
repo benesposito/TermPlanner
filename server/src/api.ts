@@ -46,6 +46,16 @@ router.get('/getUser', (req: Requests.GetUser, res, next) => {
 	next();
 });
 
+router.get('/getUsers', (req: Requests.GetUsers, res, next) => {
+	let response_body: ApiResponseBodies.GetUsers;
+	let usernames = state.getUsers();
+
+	response_body.usernames = usernames;
+
+	res.send(response_body);
+	next();
+});
+
 router.post('/addTerm', (req: Requests.AddTerm, res, next) => {
 	let user: User;
 	let term_name: TermName;

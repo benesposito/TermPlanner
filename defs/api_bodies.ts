@@ -28,4 +28,8 @@ export namespace ApiResponseBodies {
 	export interface GetUser {
 		user: User
 	}
+	
+	export interface GetUsers {
+		usernames: string[]
+	}
 }
